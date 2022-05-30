@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>2 Regex | SLP Notes</title>
+  <meta name="description" content="2 Regex | SLP Notes" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="2 Regex | SLP Notes" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="2 Regex | SLP Notes" />
+  
+  
+  
+
+<meta name="author" content="brightertiger" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Notes</a></li>
+<li class="chapter" data-level="2" data-path="regex.html"><a href="regex.html"><i class="fa fa-check"></i><b>2</b> Regex</a>
+<ul>
+<li class="chapter" data-level="2.0.1" data-path="regex.html"><a href="regex.html#regex-1"><i class="fa fa-check"></i><b>2.0.1</b> Regex</a></li>
+<li class="chapter" data-level="2.0.2" data-path="regex.html"><a href="regex.html#words"><i class="fa fa-check"></i><b>2.0.2</b> Words</a></li>
+<li class="chapter" data-level="2.0.3" data-path="regex.html"><a href="regex.html#text-normalization"><i class="fa fa-check"></i><b>2.0.3</b> Text Normalization</a></li>
+<li class="chapter" data-level="2.0.4" data-path="regex.html"><a href="regex.html#word-normalization"><i class="fa fa-check"></i><b>2.0.4</b> Word Normalization</a></li>
+<li class="chapter" data-level="2.0.5" data-path="regex.html"><a href="regex.html#edit-distance"><i class="fa fa-check"></i><b>2.0.5</b> Edit Distance</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">SLP Notes</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="regex" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">2</span> Regex<a href="regex.html#regex" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="regex-1" class="section level3 hasAnchor" number="2.0.1">
+<h3><span class="header-section-number">2.0.1</span> Regex<a href="regex.html#regex-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Language for specifying text search strings</li>
+<li>Algebraic notation for characterizing a set of strings</li>
+<li>Basic regular expression
+<ul>
+<li>Match the “word” /word/</li>
+<li>Match the “word” or “Word” /[wW]ord/</li>
+<li>Match single digit /[1234567890]/</li>
+</ul></li>
+<li>Ranges
+<ul>
+<li>Capital Letters /[A-Z]/</li>
+<li>Lower Case Letters /[a-z]/</li>
+<li>Single Digit /[0-9]/</li>
+</ul></li>
+<li>Caret
+<ul>
+<li>Exclusions</li>
+<li>Not an upper case letter /[^A-Z]/</li>
+<li>Not a period /[^.]/</li>
+<li>If caret is not the first character, it’s treated as any other character</li>
+</ul></li>
+<li>Question Mark
+<ul>
+<li>Preceding character or nothing</li>
+<li>“word” or “words” /words?/</li>
+<li>“colour” or “color” /colou?r/</li>
+</ul></li>
+<li>Kleene *
+<ul>
+<li>Zero or more occurances</li>
+<li>Zero or more “a” /a*/</li>
+<li>Zero or more “a”s or “b”s /[ab]*/</li>
+</ul></li>
+<li>Kleene +
+<ul>
+<li>One or more occurances</li>
+<li>One or more digits /[0-9]+/</li>
+</ul></li>
+<li>Wildcard
+<ul>
+<li>Match any single expression</li>
+<li>Any character between “beg” and “n” /beg.n/</li>
+</ul></li>
+<li>Anchors
+<ul>
+<li>Start of the line ^</li>
+<li>Lines starting with “the” /^The/</li>
+<li>End of the line $</li>
+<li>Lines ending with period /\.$/</li>
+<li>Word boundary </li>
+</ul></li>
+<li>Grouping
+<ul>
+<li>Disjunction “|”
+<ul>
+<li>Match either cat or dog /cat|dog/</li>
+</ul></li>
+<li>Paranthesis ()
+<ul>
+<li>Match “guppy” or “guppies” /gupp(y|ies)/</li>
+</ul></li>
+</ul></li>
+<li>Example
+<ul>
+<li>/(ˆ|[ˆa-zA-Z])[tT]he([ˆa-zA-Z]|$)/
+<ul>
+<li>At the start or a non-alphabetic character</li>
+<li>At the end or non-alphabetic character</li>
+<li>Look for “the” or “The”</li>
+</ul></li>
+</ul></li>
+<li>Operators
+<ul>
+<li>Any digit </li>
+<li>Any non-digit </li>
+<li>Whitespace </li>
+<li>Non-whitespace </li>
+<li>Any alphanumeric </li>
+<li>Non Alpha-numeric </li>
+</ul></li>
+<li>Range
+<ul>
+<li>Zero or more *</li>
+<li>One or more +</li>
+<li>Exactly zero or one ?</li>
+<li>N Occurances {n}</li>
+<li>N-to-M Occurances {n,m}</li>
+<li>Atleast N Occurances {n,}</li>
+<li>Upto M Occurances {,m}</li>
+</ul></li>
+</ul>
+</div>
+<div id="words" class="section level3 hasAnchor" number="2.0.2">
+<h3><span class="header-section-number">2.0.2</span> Words<a href="regex.html#words" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Utterance is the spoken correlate of a sentence</li>
+<li>Disfluency
+<ul>
+<li>Fragments: broken off words</li>
+<li>Fillers or Filled Pauses “um”</li>
+</ul></li>
+<li>Lemma: Lexical form of the same word (cats vs cat)</li>
+<li>Types (V): Number of distinct words</li>
+<li>Tokens (N): Number of running words</li>
+<li>Heap’s Law: <span class="math inline">\(V = K N^\beta\)</span></li>
+</ul>
+</div>
+<div id="text-normalization" class="section level3 hasAnchor" number="2.0.3">
+<h3><span class="header-section-number">2.0.3</span> Text Normalization<a href="regex.html#text-normalization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Involves three steps
+<ul>
+<li>Tokenzing Words</li>
+<li>Normalizing word formats</li>
+<li>Segmenting sentences</li>
+</ul></li>
+<li>Tokenization
+<ul>
+<li>Breaing up a an utterance into tokens</li>
+<li>Penn Treebank Tokenization</li>
+<li>NLTK Regex Tokenization</li>
+<li>Byte Pair Encoding
+<ul>
+<li>Emperically determine the tokens using data</li>
+<li>Useful in dealing with unseen words</li>
+<li>Use subwords tokens which are arbitrary substrings</li>
+<li>Token Learner: Creates vocabulary out of corpus</li>
+<li>Token Segementor: Applies token learner on raw test data</li>
+<li>BPE Token Learner
+<ul>
+<li>Starts with individual characters as vocab</li>
+<li>Merges the most frequently occuring pairs and adds them to back vocab</li>
+<li>Repeats the count and merge process to create longer substrings</li>
+<li>Continues until vocab size is reached</li>
+<li>No merging across word boundries</li>
+</ul></li>
+<li>BPE Token Parser
+<ul>
+<li>Run the token learner on test data</li>
+<li>Same order in which tokens were created</li>
+<li>First split into individual characters</li>
+<li>Merge the characters based on BPE vocab</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<div id="word-normalization" class="section level3 hasAnchor" number="2.0.4">
+<h3><span class="header-section-number">2.0.4</span> Word Normalization<a href="regex.html#word-normalization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Putting words and tokens in a standard format</li>
+<li>Case Folding: Convert everything to lowercase</li>
+<li>Lemmatization: Reduce words to roots
+<ul>
+<li>Stemming (ing, ed etc.)</li>
+<li>Porter Stemming</li>
+</ul></li>
+</ul>
+</div>
+<div id="edit-distance" class="section level3 hasAnchor" number="2.0.5">
+<h3><span class="header-section-number">2.0.5</span> Edit Distance<a href="regex.html#edit-distance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Similarity between two strings</li>
+<li>Minimum number of editing operations needed to transform one string into another
+<ul>
+<li>Insertion, Deletion and Substitution</li>
+</ul></li>
+<li>Levenstien Distance: All three operations ahve the same cost</li>
+<li>Dynamic Programming
+<ul>
+<li>Viterbi Algorithm</li>
+</ul></li>
+</ul>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

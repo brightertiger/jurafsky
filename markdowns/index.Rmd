@@ -1,0 +1,15 @@
+---
+title: "SLP Notes"
+author: "brightertiger"
+site: bookdown::bookdown_site
+documentclass: book
+output:
+  bookdown::gitbook: default
+  #bookdown::pdf_book: default
+---
+
+# Notes
+
+Hi I am brightertiger! I am a data scientist looking to expand my knowledge about ML.
+
+This is a collection of notes based mostly the book Speech and Language Processing.
