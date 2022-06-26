@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Regex | SLP Notes</title>
-  <meta name="description" content="2 Regex | SLP Notes" />
+  <title>3 Tokenization | SLP Notes</title>
+  <meta name="description" content="3 Tokenization | SLP Notes" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Regex | SLP Notes" />
+  <meta property="og:title" content="3 Tokenization | SLP Notes" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Regex | SLP Notes" />
+  <meta name="twitter:title" content="3 Tokenization | SLP Notes" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="tokenization.html"/>
+<link rel="prev" href="regex.html"/>
+<link rel="next" href="vectors.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -113,183 +113,131 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="regex" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">2</span> Regex<a href="regex.html#regex" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="regex-1" class="section level3 hasAnchor" number="2.0.1">
-<h3><span class="header-section-number">2.0.1</span> Regex<a href="regex.html#regex-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="tokenization" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> Tokenization<a href="tokenization.html#tokenization" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="n-grams" class="section level3 hasAnchor" number="3.0.1">
+<h3><span class="header-section-number">3.0.1</span> N-Grams<a href="tokenization.html#n-grams" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Language for specifying text search strings</li>
-<li>Algebraic notation for characterizing a set of strings</li>
-<li>Basic regular expression
+<li>Language Models assign probabilities to sequence of words
 <ul>
-<li>Match the “word” /word/</li>
-<li>Match the “word” or “Word” /[wW]ord/</li>
-<li>Match single digit /[1234567890]/</li>
+<li><span class="math inline">\(P(w_1, w_2, ..., w_n)\)</span></li>
 </ul></li>
-<li>Ranges
+<li>Simplify the calculation using chain rule
 <ul>
-<li>Capital Letters /[A-Z]/</li>
-<li>Lower Case Letters /[a-z]/</li>
-<li>Single Digit /[0-9]/</li>
+<li><span class="math inline">\(P(w_1, w_2, ..., w_n) = P(w_1) \times P(w_2 | w_1)..... \times P(w_n | w_1 w_2 .. w_{n-1})\)</span></li>
+<li><span class="math inline">\(P(w_1, w_2, ..., w_n) = \prod P(w_i | w_{1:i-1})\)</span></li>
 </ul></li>
-<li>Caret
+<li>Joint probability can be expressed as a product of conditional probabilities
 <ul>
-<li>Exclusions</li>
-<li>Not an upper case letter /[^A-Z]/</li>
-<li>Not a period /[^.]/</li>
-<li>If caret is not the first character, it’s treated as any other character</li>
+<li>Probability of a word given historical context</li>
+<li><span class="math inline">\(P(w_n | h)\)</span></li>
 </ul></li>
-<li>Question Mark
+<li>N-gram refers to a sequence of n words</li>
+<li>N-gram model makes the Markov assumption
 <ul>
-<li>Preceding character or nothing</li>
-<li>“word” or “words” /words?/</li>
-<li>“colour” or “color” /colou?r/</li>
+<li><span class="math inline">\(P(w | h)\)</span> can be approximated using just the last n-1 words</li>
 </ul></li>
-<li>Kleene *
+<li>For example in case of a bigram model
 <ul>
-<li>Zero or more occurances</li>
-<li>Zero or more “a” /a*/</li>
-<li>Zero or more “a”s or “b”s /[ab]*/</li>
+<li><span class="math inline">\(P(w_n | h) \approx P(w_n | w_{n-1})\)</span></li>
 </ul></li>
-<li>Kleene +
+<li>Estimate the probabilities using Maximum Likelihood
 <ul>
-<li>One or more occurances</li>
-<li>One or more digits /[0-9]+/</li>
+<li>Relative frequency</li>
+<li><span class="math inline">\(P(w_n | w_{n-1}) = {P(w_{n-1}, w_n) \over \sum_k P(w_{n-1}, w_k)}\)</span></li>
+<li><span class="math inline">\(P(w_n | w_{n-1}) = P(w_{n-1}, w_n) / P(w_{n-1})\)</span></li>
 </ul></li>
-<li>Wildcard
+<li>BOS and EOS tokens to handle the edge cases</li>
+<li>N-gram models apt at capturing syntactic features (noun-verb-adj etc)</li>
+<li>To avoid numerical underflow, overflow problems use log probabilities
 <ul>
-<li>Match any single expression</li>
-<li>Any character between “beg” and “n” /beg.n/</li>
-</ul></li>
-<li>Anchors
-<ul>
-<li>Start of the line ^</li>
-<li>Lines starting with “the” /^The/</li>
-<li>End of the line $</li>
-<li>Lines ending with period /\.$/</li>
-<li>Word boundary </li>
-</ul></li>
-<li>Grouping
-<ul>
-<li>Disjunction “|”
-<ul>
-<li>Match either cat or dog /cat|dog/</li>
-</ul></li>
-<li>Paranthesis ()
-<ul>
-<li>Match “guppy” or “guppies” /gupp(y|ies)/</li>
-</ul></li>
-</ul></li>
-<li>Example
-<ul>
-<li>/(ˆ|[ˆa-zA-Z])[tT]he([ˆa-zA-Z]|$)/
-<ul>
-<li>At the start or a non-alphabetic character</li>
-<li>At the end or non-alphabetic character</li>
-<li>Look for “the” or “The”</li>
-</ul></li>
-</ul></li>
-<li>Operators
-<ul>
-<li>Any digit </li>
-<li>Any non-digit </li>
-<li>Whitespace </li>
-<li>Non-whitespace </li>
-<li>Any alphanumeric </li>
-<li>Non Alpha-numeric </li>
-</ul></li>
-<li>Range
-<ul>
-<li>Zero or more *</li>
-<li>One or more +</li>
-<li>Exactly zero or one ?</li>
-<li>N Occurances {n}</li>
-<li>N-to-M Occurances {n,m}</li>
-<li>Atleast N Occurances {n,}</li>
-<li>Upto M Occurances {,m}</li>
+<li><span class="math inline">\(p_1 \times p_2 = \exp(\log p_1 + \log p_2)\)</span></li>
 </ul></li>
 </ul>
 </div>
-<div id="words" class="section level3 hasAnchor" number="2.0.2">
-<h3><span class="header-section-number">2.0.2</span> Words<a href="regex.html#words" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="perplexity" class="section level3 hasAnchor" number="3.0.2">
+<h3><span class="header-section-number">3.0.2</span> Perplexity<a href="tokenization.html#perplexity" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Utterance is the spoken correlate of a sentence</li>
-<li>Disfluency
+<li>Inverse probability normalized by the length of sequence</li>
+<li><span class="math inline">\(PP(W) = P(w_1 w_2 ... w_n)^{ - {1 \over n}}\)</span></li>
+<li><span class="math inline">\(PP(W) = \sqrt[n]{\prod 1 / P(w_i | w_{1:i-1})}\)</span></li>
+<li>Higher the conditional probability, lower is the perplexity</li>
+<li>Weighted average branching factor
 <ul>
-<li>Fragments: broken off words</li>
-<li>Fillers or Filled Pauses “um”</li>
+<li>Branching factor refers to the number of possible words that can follow a particluar word</li>
 </ul></li>
-<li>Lemma: Lexical form of the same word (cats vs cat)</li>
-<li>Types (V): Number of distinct words</li>
-<li>Tokens (N): Number of running words</li>
-<li>Heap’s Law: <span class="math inline">\(V = K N^\beta\)</span></li>
+<li>Perplxity of LMs comparable only if they use same vocabulary</li>
 </ul>
 </div>
-<div id="text-normalization" class="section level3 hasAnchor" number="2.0.3">
-<h3><span class="header-section-number">2.0.3</span> Text Normalization<a href="regex.html#text-normalization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="perplexity-and-entropy" class="section level3 hasAnchor" number="3.0.3">
+<h3><span class="header-section-number">3.0.3</span> Perplexity and Entropy<a href="tokenization.html#perplexity-and-entropy" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Involves three steps
+<li>Entropy is a measure of information
 <ul>
-<li>Tokenzing Words</li>
-<li>Normalizing word formats</li>
-<li>Segmenting sentences</li>
+<li>Number of bits it takes to encode information (log base 2)</li>
+<li><span class="math inline">\(H(x) = - \sum p \log (p)\)</span></li>
 </ul></li>
-<li>Tokenization
+<li>Entropy Rate: Entropy // Seq Length</li>
+<li>LMs can potentially consider infinite sequence length
 <ul>
-<li>Breaing up a an utterance into tokens</li>
-<li>Penn Treebank Tokenization</li>
-<li>NLTK Regex Tokenization</li>
-<li>Byte Pair Encoding
-<ul>
-<li>Emperically determine the tokens using data</li>
-<li>Useful in dealing with unseen words</li>
-<li>Use subwords tokens which are arbitrary substrings</li>
-<li>Token Learner: Creates vocabulary out of corpus</li>
-<li>Token Segementor: Applies token learner on raw test data</li>
-<li>BPE Token Learner
-<ul>
-<li>Starts with individual characters as vocab</li>
-<li>Merges the most frequently occuring pairs and adds them to back vocab</li>
-<li>Repeats the count and merge process to create longer substrings</li>
-<li>Continues until vocab size is reached</li>
-<li>No merging across word boundries</li>
+<li><span class="math inline">\(H(W) = - \lim_{n \to \infty} {1 \over n} \sum p(w_{1:n}) \log(p_{1:n})\)</span></li>
+<li><span class="math inline">\(H(W) \approx - {1 \over n} \log p(w_{1:n})\)</span></li>
 </ul></li>
-<li>BPE Token Parser
+<li><span class="math inline">\(P(W) = 2^{H(W)}\)</span></li>
+</ul>
+</div>
+<div id="unknown-words" class="section level3 hasAnchor" number="3.0.4">
+<h3><span class="header-section-number">3.0.4</span> Unknown Words<a href="tokenization.html#unknown-words" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Run the token learner on test data</li>
-<li>Same order in which tokens were created</li>
-<li>First split into individual characters</li>
-<li>Merge the characters based on BPE vocab</li>
+<li>If probability of a word is zero, the perplexity is not defined.</li>
+<li>Unknown words or OOV words (out of vocab)</li>
+<li>Handle via pre-processing <UNK> token
+<ul>
+<li>Replace rare words with this token in training corpus</li>
 </ul></li>
+<li>LMs can achieve lower perplexity by selecting smaller vocab size</li>
+</ul>
+</div>
+<div id="smoothing" class="section level3 hasAnchor" number="3.0.5">
+<h3><span class="header-section-number">3.0.5</span> Smoothing<a href="tokenization.html#smoothing" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Avoid assigning zero probabilities to unseen sequences</li>
+<li>Laplace Smoothing
+<ul>
+<li>Add smoothing constants while calculating relative frequencies</li>
+<li>1 to numerator</li>
+<li>V to denominator, V is the vocab size to ensure that probabilities sum up to 1</li>
+<li><span class="math inline">\(P(w_i) = (w_i + 1) / (N + V)\)</span></li>
+<li><span class="math inline">\(P(w_i | w_n) = \text{count}(w_i, w_n) + 1 / \text{count}(w_n) + V\)</span></li>
+<li>Discount some probability mass from seen phrases and save it for unseen phrases</li>
+<li>Generalization to “Add - k” smoothing</li>
 </ul></li>
+<li>Back-off
+<ul>
+<li>Use shorter sequences in case not enough support for full context</li>
+<li>Trigram if evidence is sufficent, otherwise use bigram</li>
+</ul></li>
+<li>Interpolation
+<ul>
+<li>Mix the probability estimates from all n-grams</li>
+<li><span class="math inline">\(P(w_1 | w_2 w_3) = \lambda_1 P(w_1) + \lambda_2 P(w_1 | w_2) + + \lambda_3 P(w_1 | w_2 w_3)\)</span></li>
+</ul></li>
+<li>Kneser-Ney Smoothing
+<ul>
+<li>Absolute discounting</li>
+<li><span class="math inline">\(P(w_1 | w_2) = C(w_1 w_2) - d / \sum c(w_2) + \lambda P(w_1)\)</span></li>
 </ul></li>
 </ul>
 </div>
-<div id="word-normalization" class="section level3 hasAnchor" number="2.0.4">
-<h3><span class="header-section-number">2.0.4</span> Word Normalization<a href="regex.html#word-normalization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="efficiency" class="section level3 hasAnchor" number="3.0.6">
+<h3><span class="header-section-number">3.0.6</span> Efficiency<a href="tokenization.html#efficiency" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Putting words and tokens in a standard format</li>
-<li>Case Folding: Convert everything to lowercase</li>
-<li>Lemmatization: Reduce words to roots
-<ul>
-<li>Stemming (ing, ed etc.)</li>
-<li>Porter Stemming</li>
-</ul></li>
-</ul>
-</div>
-<div id="edit-distance" class="section level3 hasAnchor" number="2.0.5">
-<h3><span class="header-section-number">2.0.5</span> Edit Distance<a href="regex.html#edit-distance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li>Similarity between two strings</li>
-<li>Minimum number of editing operations needed to transform one string into another
-<ul>
-<li>Insertion, Deletion and Substitution</li>
-</ul></li>
-<li>Levenstien Distance: All three operations ahve the same cost</li>
-<li>Dynamic Programming
-<ul>
-<li>Viterbi Algorithm</li>
-</ul></li>
+<li>Reduce memory footprint</li>
+<li>Quantization for probabilities</li>
+<li>Reverse Tries for N-grams</li>
+<li>String Hashing</li>
+<li>Bloom filters</li>
+<li>Stupid Backoff</li>
 </ul>
 
 </div>
@@ -299,8 +247,8 @@
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tokenization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="regex.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="vectors.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

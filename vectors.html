@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Regex | SLP Notes</title>
-  <meta name="description" content="2 Regex | SLP Notes" />
+  <title>4 Vectors | SLP Notes</title>
+  <meta name="description" content="4 Vectors | SLP Notes" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Regex | SLP Notes" />
+  <meta property="og:title" content="4 Vectors | SLP Notes" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Regex | SLP Notes" />
+  <meta name="twitter:title" content="4 Vectors | SLP Notes" />
   
   
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="index.html"/>
-<link rel="next" href="tokenization.html"/>
+<link rel="prev" href="tokenization.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -113,182 +113,194 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="regex" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">2</span> Regex<a href="regex.html#regex" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="regex-1" class="section level3 hasAnchor" number="2.0.1">
-<h3><span class="header-section-number">2.0.1</span> Regex<a href="regex.html#regex-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="vectors" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Vectors<a href="vectors.html#vectors" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="lexical-semantics" class="section level3 hasAnchor" number="4.0.1">
+<h3><span class="header-section-number">4.0.1</span> Lexical Semantics<a href="vectors.html#lexical-semantics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Language for specifying text search strings</li>
-<li>Algebraic notation for characterizing a set of strings</li>
-<li>Basic regular expression
+<li>Issues that make it harder for syntactic models to scale well</li>
+<li>Lemmas and word forms (sing vs sang vs sung are infinitive forms of sing)</li>
+<li>Word Sense Disambiguation (mouse animal vs mouse hardware)</li>
+<li>Synonyms with same propositional meaning (couch vs sofa)</li>
+<li>Word Relatedness (coffee vs cup)</li>
+<li>Semantic Frames (A buy from B vs B sell to A)</li>
+<li>Connotation (affective meaning)</li>
+</ul>
+</div>
+<div id="vector-semantics" class="section level3 hasAnchor" number="4.0.2">
+<h3><span class="header-section-number">4.0.2</span> Vector Semantics<a href="vectors.html#vector-semantics" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Match the “word” /word/</li>
-<li>Match the “word” or “Word” /[wW]ord/</li>
-<li>Match single digit /[1234567890]/</li>
+<li>Represent words using vectors called “embeddings”</li>
+<li>Derived from co-occurance matrix</li>
+<li>Document Vectors
+<ul>
+<li>Term-Document Matrix</li>
+<li>|V| X |D| Dimension</li>
+<li>Count of times a word shows up in a document</li>
+<li>Vector of the document in |V| dimension space</li>
+<li>Used for informational retrieval</li>
+<li>Vector Space Model</li>
 </ul></li>
-<li>Ranges
+<li>Word Vectors
 <ul>
-<li>Capital Letters /[A-Z]/</li>
-<li>Lower Case Letters /[a-z]/</li>
-<li>Single Digit /[0-9]/</li>
+<li>Term-Term Matrix<br />
+</li>
+<li>|V| x |V| dimension</li>
+<li>Number of times a word and context word show up in the same document</li>
+<li>Word-Word co-occurance matrix</li>
+<li>Sparsity is a challenge</li>
 </ul></li>
-<li>Caret
+<li>Cosine Distance
 <ul>
-<li>Exclusions</li>
-<li>Not an upper case letter /[^A-Z]/</li>
-<li>Not a period /[^.]/</li>
-<li>If caret is not the first character, it’s treated as any other character</li>
-</ul></li>
-<li>Question Mark
-<ul>
-<li>Preceding character or nothing</li>
-<li>“word” or “words” /words?/</li>
-<li>“colour” or “color” /colou?r/</li>
-</ul></li>
-<li>Kleene *
-<ul>
-<li>Zero or more occurances</li>
-<li>Zero or more “a” /a*/</li>
-<li>Zero or more “a”s or “b”s /[ab]*/</li>
-</ul></li>
-<li>Kleene +
-<ul>
-<li>One or more occurances</li>
-<li>One or more digits /[0-9]+/</li>
-</ul></li>
-<li>Wildcard
-<ul>
-<li>Match any single expression</li>
-<li>Any character between “beg” and “n” /beg.n/</li>
-</ul></li>
-<li>Anchors
-<ul>
-<li>Start of the line ^</li>
-<li>Lines starting with “the” /^The/</li>
-<li>End of the line $</li>
-<li>Lines ending with period /\.$/</li>
-<li>Word boundary </li>
-</ul></li>
-<li>Grouping
-<ul>
-<li>Disjunction “|”
-<ul>
-<li>Match either cat or dog /cat|dog/</li>
-</ul></li>
-<li>Paranthesis ()
-<ul>
-<li>Match “guppy” or “guppies” /gupp(y|ies)/</li>
-</ul></li>
-</ul></li>
-<li>Example
-<ul>
-<li>/(ˆ|[ˆa-zA-Z])[tT]he([ˆa-zA-Z]|$)/
-<ul>
-<li>At the start or a non-alphabetic character</li>
-<li>At the end or non-alphabetic character</li>
-<li>Look for “the” or “The”</li>
-</ul></li>
-</ul></li>
-<li>Operators
-<ul>
-<li>Any digit </li>
-<li>Any non-digit </li>
-<li>Whitespace </li>
-<li>Non-whitespace </li>
-<li>Any alphanumeric </li>
-<li>Non Alpha-numeric </li>
-</ul></li>
-<li>Range
-<ul>
-<li>Zero or more *</li>
-<li>One or more +</li>
-<li>Exactly zero or one ?</li>
-<li>N Occurances {n}</li>
-<li>N-to-M Occurances {n,m}</li>
-<li>Atleast N Occurances {n,}</li>
-<li>Upto M Occurances {,m}</li>
+<li>Normalized Dot Product</li>
+<li>Normalized by the l2-norm, to control for vector size</li>
+<li><span class="math inline">\(\cos \theta = a.b / |a||b|\)</span></li>
+<li>1 if vectors are in the same direction</li>
+<li>-1 if vectors are in opposite direction</li>
+<li>0 if vectors are perpendicular</li>
+<li>For nomrlized vectors, it’s directly related to euclidean distance</li>
+<li><span class="math inline">\(|a - b|^2 = |a|^2 + |b|^2 - 2|a||b|\cos\theta = 2(1 - \cos \theta)\)</span></li>
 </ul></li>
 </ul>
 </div>
-<div id="words" class="section level3 hasAnchor" number="2.0.2">
-<h3><span class="header-section-number">2.0.2</span> Words<a href="regex.html#words" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="tf-idf" class="section level3 hasAnchor" number="4.0.3">
+<h3><span class="header-section-number">4.0.3</span> TF-IDF<a href="vectors.html#tf-idf" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Utterance is the spoken correlate of a sentence</li>
-<li>Disfluency
+<li>Term Frequency
 <ul>
-<li>Fragments: broken off words</li>
-<li>Fillers or Filled Pauses “um”</li>
+<li>Frequency of word t in document d</li>
+<li><span class="math inline">\(tf_{t,d} = \text{count}(t,d)\)</span></li>
+<li>Smooth TF</li>
+<li><span class="math inline">\(tf_{t,d} = \log(1 + \text{count}(t,d))\)</span></li>
 </ul></li>
-<li>Lemma: Lexical form of the same word (cats vs cat)</li>
-<li>Types (V): Number of distinct words</li>
-<li>Tokens (N): Number of running words</li>
-<li>Heap’s Law: <span class="math inline">\(V = K N^\beta\)</span></li>
-</ul>
-</div>
-<div id="text-normalization" class="section level3 hasAnchor" number="2.0.3">
-<h3><span class="header-section-number">2.0.3</span> Text Normalization<a href="regex.html#text-normalization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<li>Document Frequency
 <ul>
-<li>Involves three steps
-<ul>
-<li>Tokenzing Words</li>
-<li>Normalizing word formats</li>
-<li>Segmenting sentences</li>
+<li>Number of documents in which term t appears</li>
+<li><span class="math inline">\(df_t\)</span></li>
 </ul></li>
-<li>Tokenization
+<li>Inverse Document Frequency
 <ul>
-<li>Breaing up a an utterance into tokens</li>
-<li>Penn Treebank Tokenization</li>
-<li>NLTK Regex Tokenization</li>
-<li>Byte Pair Encoding
-<ul>
-<li>Emperically determine the tokens using data</li>
-<li>Useful in dealing with unseen words</li>
-<li>Use subwords tokens which are arbitrary substrings</li>
-<li>Token Learner: Creates vocabulary out of corpus</li>
-<li>Token Segementor: Applies token learner on raw test data</li>
-<li>BPE Token Learner
-<ul>
-<li>Starts with individual characters as vocab</li>
-<li>Merges the most frequently occuring pairs and adds them to back vocab</li>
-<li>Repeats the count and merge process to create longer substrings</li>
-<li>Continues until vocab size is reached</li>
-<li>No merging across word boundries</li>
+<li><span class="math inline">\(idf_t = \log(N / df_t)\)</span></li>
 </ul></li>
-<li>BPE Token Parser
+<li>TF-IDF
 <ul>
-<li>Run the token learner on test data</li>
-<li>Same order in which tokens were created</li>
-<li>First split into individual characters</li>
-<li>Merge the characters based on BPE vocab</li>
-</ul></li>
-</ul></li>
+<li><span class="math inline">\(w_{t,d} = tf_{t,d} \times idf_t\)</span></li>
 </ul></li>
 </ul>
 </div>
-<div id="word-normalization" class="section level3 hasAnchor" number="2.0.4">
-<h3><span class="header-section-number">2.0.4</span> Word Normalization<a href="regex.html#word-normalization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="pmi" class="section level3 hasAnchor" number="4.0.4">
+<h3><span class="header-section-number">4.0.4</span> PMI<a href="vectors.html#pmi" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Putting words and tokens in a standard format</li>
-<li>Case Folding: Convert everything to lowercase</li>
-<li>Lemmatization: Reduce words to roots
+<li>Ratio
 <ul>
-<li>Stemming (ing, ed etc.)</li>
-<li>Porter Stemming</li>
+<li>How often to x and y actually co-occur?</li>
+<li>How often will x and y co-occur if they were independent?</li>
+</ul></li>
+<li><span class="math inline">\(I(x,y) = \log ({P(x,y) \over P(x)P(y)})\)</span></li>
+<li>Ranges from negative to positive infinity</li>
+<li>Positive PMI max(0, PMI)</li>
+</ul>
+</div>
+<div id="vector-representation" class="section level3 hasAnchor" number="4.0.5">
+<h3><span class="header-section-number">4.0.5</span> Vector Representation<a href="vectors.html#vector-representation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>For a given word T
+<ul>
+<li>Term-Document Matrix</li>
+<li>Each word vector has |D| dimensions</li>
+<li>Each cell is weighted using TF-IDF logic</li>
+</ul></li>
+<li>Document Vector
+<ul>
+<li>Average of all word vecotrs appearing in the document</li>
+<li>Similarity is calculated by cosine distance</li>
 </ul></li>
 </ul>
 </div>
-<div id="edit-distance" class="section level3 hasAnchor" number="2.0.5">
-<h3><span class="header-section-number">2.0.5</span> Edit Distance<a href="regex.html#edit-distance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="word2vec" class="section level3 hasAnchor" number="4.0.6">
+<h3><span class="header-section-number">4.0.6</span> Word2Vec<a href="vectors.html#word2vec" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <ul>
-<li>Similarity between two strings</li>
-<li>Minimum number of editing operations needed to transform one string into another
+<li>Tf-IDF and PMI generate sparse vectors</li>
+<li>Need for dense and more efficient representation of words</li>
+<li>Static EMbeddings
 <ul>
-<li>Insertion, Deletion and Substitution</li>
+<li>Skipgram with Negative Sampling</li>
 </ul></li>
-<li>Levenstien Distance: All three operations ahve the same cost</li>
-<li>Dynamic Programming
+<li>Contextual Embeddings
 <ul>
-<li>Viterbi Algorithm</li>
+<li>Dynamic embedding for each word</li>
+<li>Changes with context (ex - positional embedding)</li>
+</ul></li>
+<li>Self Supervised Learning</li>
+</ul>
+</div>
+<div id="skipgram" class="section level3 hasAnchor" number="4.0.7">
+<h3><span class="header-section-number">4.0.7</span> Skipgram<a href="vectors.html#skipgram" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Algorithm
+<ul>
+<li>Treat tatget workd and neighbouring context word as positive samples (Window)</li>
+<li>Randomly sample other words from vocab as negative samples</li>
+<li>Use FFNN / Logistic Regression train a classifier</li>
+<li>Use the learned weights as embeddings</li>
+</ul></li>
+<li>Positive Examples
+<ul>
+<li>Context Window of Size 2</li>
+<li>All words +-2 from the given word</li>
+</ul></li>
+<li>Negative Examples
+<ul>
+<li>Unigram frequency</li>
+<li>Downweighted to avoid sampling stop words frequently</li>
+<li><span class="math inline">\(P_{ij} \propto f_{ij}^{0.75}\)</span></li>
+</ul></li>
+<li>Classifier
+<ul>
+<li>Maximize the similarity to positive samples</li>
+<li>Minimize the similarity to negative samples</li>
+<li><span class="math inline">\(L_{CE} = \log P(+ | w,C_+) - \sum \log P(- | w,C_-)\)</span></li>
+<li><span class="math inline">\(L_{CE} = \log \sigma(w . C_+) - \sum \log \sigma(-w . C_-)\)</span></li>
+<li>Use SGD to update w</li>
+</ul></li>
+<li>Each word has two separate embeddings
+<ul>
+<li>target (when is shows up as w)</li>
+<li>context (when it shows up as c)</li>
+<li>Final embedding is the sum of the two</li>
+</ul></li>
+</ul>
+</div>
+<div id="enhancements" class="section level3 hasAnchor" number="4.0.8">
+<h3><span class="header-section-number">4.0.8</span> Enhancements<a href="vectors.html#enhancements" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ul>
+<li>Unknown / OOV words
+<ul>
+<li>Use subwords models like FastText</li>
+<li>n-grams on characters</li>
+</ul></li>
+<li>GloVe
+<ul>
+<li>Global vectors</li>
+<li>Ratios of probabilities form word-word co-occurance matrix</li>
+</ul></li>
+<li>Similarity
+<ul>
+<li><span class="math inline">\(a:b :: a&#39;:b&#39;\)</span></li>
+<li><span class="math inline">\(b&#39; = \arg \min \text{distance}(x, b - a + a&#39;)\)</span></li>
+</ul></li>
+<li>Bias
+<ul>
+<li>Allocation Harm
+<ul>
+<li>Unfair to different groups</li>
+<li>father-doctor, mother - housewife</li>
+</ul></li>
+<li>Representational Harm
+<ul>
+<li>Wrong association for marginal groups</li>
+<li>African-american names to negative sentiment words</li>
+</ul></li>
 </ul></li>
 </ul>
 
@@ -299,8 +311,8 @@
           </div>
         </div>
       </div>
-<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="tokenization.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="tokenization.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
